@@ -80,5 +80,31 @@ ls -l /usr/local/bin/banner
 ```
 # Task 6
 ```
+nano check_comments
 
+#!/bin/sh
+
+find . -type f \( -name "*.c" -o -name "*.js" -o -name "*.py" \) | while read file
+do
+    first=$(head -n 1 "$file")
+
+    case "$file" in
+        *.py)
+            echo "$first" | grep -q '^[[:space:]]*#'
+            ;;
+        *.c|*.js)
+            echo "$first" | grep -q '^[[:space:]]*\(//\|/\*\)'
+            ;;
+    esac
+
+    if [ $? -eq 0 ]; then
+        echo "$file: комментарий есть"
+    else
+        echo "$file: комментария нет"
+    fi
+done
+
+chmod +x check_comments
+./check_comments
 ```
+
