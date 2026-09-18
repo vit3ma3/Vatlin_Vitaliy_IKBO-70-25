@@ -58,19 +58,19 @@ nano reg
 #!/bin/sh
 
 if [ $# -ne 1 ]; then
-    echo "Использование: $0 имя_команды"
+    echo "Usage: $0 command_name"
     exit 1
 fi
 
 if [ ! -f "$1" ]; then
-    echo "Ошибка: файл $1 не найден"
+    echo "Error: file $1 not found"
     exit 1
 fi
 
 chmod 755 "$1"
 cp "$1" /usr/local/bin/
 
-echo "Команда $1 зарегистрирована"
+echo "Command $1 is registered"
 
 chmod +x reg
 ./reg banner
@@ -98,13 +98,100 @@ do
     esac
 
     if [ $? -eq 0 ]; then
-        echo "$file: комментарий есть"
+        echo "$file: there is a comment"
     else
-        echo "$file: комментария нет"
+        echo "$file: no comment"
     fi
 done
 
 chmod +x check_comments
 ./check_comments
 ```
+# Task 7
+```
+nano duplicates
 
+#!/bin/sh
+
+find "$1" -type f -exec md5sum {} \; |
+sort |
+awk '
+{
+    files[$1] = files[$1] "\n" $2
+}
+END {
+    for (hash in files) {
+        n = split(files[hash], a, "\n")
+        if (n > 1) {
+            print "Duplicates:"
+            for (i = 2; i <= n; i++)
+                print a[i]
+            print ""
+        }
+    }
+}'
+
+chmod +x duplicates
+./duplicates
+```
+# Task 8
+```
+nano archive_files
+
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 extencions"
+    exit 1
+fi
+
+ext="$1"
+archive="files.tar"
+
+find . -type f -name "*.$ext" > filelist
+
+if [ ! -s filelist ]; then
+    echo "Files with extencions .$ext not found"
+    rm -f filelist
+    exit 1
+fi
+
+tar -cf "$archive" -T filelist
+
+rm -f filelist
+
+echo "Files .$ext added to $archive"
+
+chmod +x archive_files
+./archive_files txt
+tar -tf files.tar
+```
+# Task 9
+```
+nano spaces_to_tabs
+
+#!/bin/sh
+
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 input_file output_file"
+    exit 1
+fi
+
+sed 's/    /\t/g' "$1" > "$2"
+```
+#Task 10
+```
+nano empty_files
+
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Использование: $0 директория"
+    exit 1
+fi
+
+find "$1" -type f -size 0 -print
+
+chmod +x empty_files
+./empty_files .
+```
