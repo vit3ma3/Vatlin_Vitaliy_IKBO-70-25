@@ -53,5 +53,32 @@ grep -oE '[A-Za-z_][A-Za-z0-9_]*' | sort -u | xargs
 ```
 # Task 5
 ```
+nano reg
+
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    echo "Использование: $0 имя_команды"
+    exit 1
+fi
+
+if [ ! -f "$1" ]; then
+    echo "Ошибка: файл $1 не найден"
+    exit 1
+fi
+
+chmod 755 "$1"
+cp "$1" /usr/local/bin/
+
+echo "Команда $1 зарегистрирована"
+
+chmod +x reg
+./reg banner
+ls -l banner
+ls -l /usr/local/bin/banner
+/usr/local/bin/banner "Hello"
+```
+Task 6
+```
 
 ```
