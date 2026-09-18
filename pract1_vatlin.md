@@ -179,7 +179,7 @@ fi
 
 sed 's/    /\t/g' "$1" > "$2"
 ```
-#Task 10
+# Task 10
 ```
 nano empty_files
 
