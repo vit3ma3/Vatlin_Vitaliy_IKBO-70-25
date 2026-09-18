@@ -78,7 +78,7 @@ ls -l banner
 ls -l /usr/local/bin/banner
 /usr/local/bin/banner "Hello"
 ```
-Task 6
+# Task 6
 ```
 
 ```
