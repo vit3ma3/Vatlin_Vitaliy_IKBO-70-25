@@ -55,3 +55,76 @@ git clone https://github.com/expressjs/express.git
 Это получает исходный код express напрямую из его репозитория без использования npm.
 
 # Task 3
+
+### Graphviz-код для зависимостей matplotlib:
+
+Файл `matplotlib.dot`:
+
+```
+digraph matplotlib {
+    rankdir=LR;
+
+    matplotlib -> contourpy;
+    matplotlib -> cycler;
+    matplotlib -> fonttools;
+    matplotlib -> kiwisolver;
+    matplotlib -> numpy;
+    matplotlib -> packaging;
+    matplotlib -> pillow;
+    matplotlib -> pyparsing;
+    matplotlib -> "python-dateutil";
+}
+```
+### Получение изображения:
+```
+dot -Tpng matplotlib.dot -o matplotlib.png
+```
+В результате создаётся изображение matplotlib.png с графом зависимостей matplotlib.
+
+### Graphviz-код для зависимостей express:
+
+Файл express.dot:
+```
+digraph express {
+    rankdir=LR;
+
+    express -> accepts;
+    express -> body_parser;
+    express -> content_disposition;
+    express -> content_type;
+    express -> cookie;
+    express -> cookie_signature;
+    express -> debug;
+    express -> depd;
+    express -> encodeurl;
+    express -> escape_html;
+    express -> etag;
+    express -> finalhandler;
+    express -> fresh;
+    express -> http_errors;
+    express -> merge_descriptors;
+    express -> mime_types;
+    express -> on_finished;
+    express -> once;
+    express -> parseurl;
+    express -> proxy_addr;
+    express -> qs;
+    express -> range_parser;
+    express -> router;
+    express -> send;
+    express -> serve_static;
+    express -> statuses;
+    express -> type_is;
+    express -> vary;
+}
+```
+### Получение изображения:
+```
+dot -Tpng express.dot -o express.png
+```
+В результате создаётся изображение express.png с графом зависимостей express.
+
+### Для проверки созданных файлов:
+```
+ls -l matplotlib.png express.png
+```
