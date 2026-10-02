@@ -1,7 +1,7 @@
 # Task 1
 
 ### Служебная информация о matplotlib:
-```
+```bash
 python3 -m pip show matplotlib
 ```
 ### Основные элементы полученной информации:
@@ -15,7 +15,7 @@ python3 -m pip show matplotlib
 - Required-by — пакеты, использующие matplotlib.
 
 ### Получение пакета непосредственно из репозитория:
-```
+```bash
 git clone <адрес репозитория>
 ```
 Это получает исходный код пакета напрямую из его репозитория без использования pip.
@@ -23,7 +23,7 @@ git clone <адрес репозитория>
 # Task 2
 
 ### Служебная информация о express:
-```
+```bash
 npm info express
 ```
 ### Основные элементы полученной информации:
@@ -43,13 +43,13 @@ npm info express
 - scripts — команды для разработки, проверки и тестирования.
 
 ### Файл со служебной информацией пакета:
-```
+```bash
 cat node_modules/express/package.json
 ```
 Файл package.json содержит основную информацию о пакете, его версии, лицензии, репозитории, зависимостях, требованиях к Node.js и командах для разработки и тестирования.
 
 ### Получение пакета непосредственно из репозитория:
-```
+```bash
 git clone https://github.com/expressjs/express.git
 ```
 Это получает исходный код express напрямую из его репозитория без использования npm.
@@ -76,7 +76,7 @@ digraph matplotlib {
 }
 ```
 ### Получение изображения:
-```
+```bash
 dot -Tpng matplotlib.dot -o matplotlib.png
 ```
 В результате создаётся изображение matplotlib.png с графом зависимостей matplotlib.
@@ -119,13 +119,13 @@ digraph express {
 }
 ```
 ### Получение изображения:
-```
+```bash
 dot -Tpng express.dot -o express.png
 ```
 В результате создаётся изображение express.png с графом зависимостей express.
 
 ### Для проверки созданных файлов:
-```
+```bash
 ls -l matplotlib.png express.png
 ```
 
@@ -135,7 +135,7 @@ ls -l matplotlib.png express.png
 
 Файл `happy_ticket.mzn`:
 
-```
+```minizinc
 include "globals.mzn";
 
 array[1..6] of var 0..9: x;
@@ -152,7 +152,7 @@ output [
 ];
 ```
 ### Запуск программы:
-```
+```bash
 minizinc happy_ticket.mzn
 ```
 ### Полученный результат:
@@ -181,7 +181,7 @@ sum = 8
 
 Файл `task5.mzn`:
 
-```
+```minizinc
 enum MENU = {
     menu_1_0_0,
     menu_1_1_0,
@@ -251,7 +251,7 @@ output [
 ];
 ```
 ### Запуск программы:
-```
+```bash
 minizinc task5.mzn
 ```
 ### Полученный результат:
@@ -282,7 +282,7 @@ icons 1.0.0
 
 Файл `task6.mzn`:
 
-```
+```minizinc
 enum FOO = {
     foo_1_0_0,
     foo_1_1_0
@@ -337,7 +337,7 @@ output [
 ];
 ```
 ### Запуск программы:
-```
+```bash
 minizinc task6.mzn
 ```
 ### Полученный результат:
