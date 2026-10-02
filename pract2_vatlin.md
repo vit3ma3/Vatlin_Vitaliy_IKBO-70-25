@@ -276,3 +276,94 @@ dropdown 1.8.0
 icons 1.0.0
 ```
 
+# Task 6
+
+### Модель задачи о зависимостях пакетов:
+
+Файл `task6.mzn`:
+
+```
+enum FOO = {
+    foo_1_0_0,
+    foo_1_1_0
+};
+
+enum TARGET = {
+    target_1_0_0,
+    target_2_0_0
+};
+
+enum SHARED = {
+    shared_1_0_0,
+    shared_2_0_0
+};
+
+var FOO: foo;
+var TARGET: target;
+var SHARED: shared;
+
+var bool: use_left;
+var bool: use_right;
+
+constraint target = target_2_0_0;
+
+constraint
+    (foo = foo_1_1_0) ->
+    (use_left /\ use_right);
+
+constraint
+    (foo = foo_1_0_0) ->
+    (not use_left /\ not use_right);
+
+constraint
+    use_left ->
+    (shared in {shared_1_0_0, shared_2_0_0});
+
+constraint
+    use_right ->
+    (shared = shared_1_0_0);
+
+constraint
+    (shared = shared_1_0_0) /\ (use_left \/ use_right) ->
+    (target = target_1_0_0);
+
+solve satisfy;
+
+output [
+    "foo = ", show(foo),
+    "\ntarget = ", show(target),
+    "\nuse_left = ", show(use_left),
+    "\nuse_right = ", show(use_right)
+];
+```
+### Запуск программы:
+```
+minizinc task6.mzn
+```
+### Полученный результат:
+```
+foo = foo_1_0_0
+target = target_2_0_0
+use_left = false
+use_right = false
+```
+### Основные элементы модели:
+- FOO, TARGET, SHARED — возможные версии соответствующих пакетов;
+- var — переменные, которым MiniZinc подбирает версии пакетов;
+- use_left и use_right — наличие зависимостей left и right;
+- constraint — ограничения на совместимость пакетов;
+- -> — условная зависимость;
+- solve satisfy — поиск решения, удовлетворяющего всем ограничениям.
+### Результат выбора версий:
+
+При выборе foo 1.1.0 появляются зависимости left 1.0.0 и right 1.0.0. Они приводят к выбору shared 1.0.0, который требует target 1.0.0. Это противоречит требованию root 1.0.0 использовать target ^2.0.0.
+
+Поэтому выбирается:
+```
+root 1.0.0
+├── foo 1.0.0
+└── target 2.0.0
+```
+
+Эта комбинация удовлетворяет заданным ограничениям.
+
