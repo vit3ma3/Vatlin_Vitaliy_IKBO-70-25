@@ -174,3 +174,105 @@ sum = 8
 4 + 3 + 1 = 8
 ```
 Все шесть цифр различны, а минимальная сумма трёх цифр равна 8.
+
+# Task 5
+
+### Модель задачи о зависимостях пакетов:
+
+Файл `task5.mzn`:
+
+```
+enum MENU = {
+    menu_1_0_0,
+    menu_1_1_0,
+    menu_1_2_0,
+    menu_1_3_0,
+    menu_1_4_0,
+    menu_1_5_0
+};
+
+enum DROPDOWN = {
+    dropdown_1_8_0,
+    dropdown_2_0_0,
+    dropdown_2_1_0,
+    dropdown_2_2_0,
+    dropdown_2_3_0
+};
+
+enum ICONS = {
+    icons_1_0_0,
+    icons_2_0_0
+};
+
+var MENU: menu;
+var DROPDOWN: dropdown;
+var ICONS: icons;
+
+constraint icons = icons_1_0_0;
+
+constraint
+    (menu = menu_1_0_0) ->
+    (dropdown = dropdown_1_8_0);
+
+constraint
+    (menu in {
+        menu_1_1_0,
+        menu_1_2_0,
+        menu_1_3_0,
+        menu_1_4_0,
+        menu_1_5_0
+    }) ->
+    (dropdown in {
+        dropdown_2_0_0,
+        dropdown_2_1_0,
+        dropdown_2_2_0,
+        dropdown_2_3_0
+    });
+
+constraint
+    (dropdown = dropdown_1_8_0) ->
+    (icons = icons_1_0_0);
+
+constraint
+    (dropdown in {
+        dropdown_2_0_0,
+        dropdown_2_1_0,
+        dropdown_2_2_0,
+        dropdown_2_3_0
+    }) ->
+    (icons = icons_2_0_0);
+
+solve satisfy;
+
+output [
+    "menu = ", show(menu),
+    "\ndropdown = ", show(dropdown),
+    "\nicons = ", show(icons)
+];
+```
+### Запуск программы:
+```
+minizinc task5.mzn
+```
+### Полученный результат:
+```
+menu = menu_1_0_0
+dropdown = dropdown_1_8_0
+icons = icons_1_0_0
+```
+### Основные элементы модели:
+- MENU — возможные версии пакета menu;
+- DROPDOWN — возможные версии пакета dropdown;
+- ICONS — возможные версии пакета icons;
+- var — переменные, которым MiniZinc подбирает версии пакетов;
+- constraint — ограничения на совместимость версий;
+- -> — условие зависимости: если выбрана определённая версия, должна быть выбрана соответствующая зависимость;
+- solve satisfy — поиск любой комбинации версий, удовлетворяющей всем ограничениям.
+
+### Полученная совместимая комбинация:
+```
+menu 1.0.0
+dropdown 1.8.0
+icons 1.0.0
+```
+
